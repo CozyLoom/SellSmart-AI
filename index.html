@@ -20,30 +20,63 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400..700;1,9..40,400..600&family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet" />
+    <style>
+      html.dark,
+      html.dark body {
+        background-color: #071426;
+        color: #ffffff;
+        margin: 0;
+      }
+    </style>
   </head>
   <body class="bg-slate-50 text-slate-900 dark:bg-[#071426] dark:text-white antialiased selection:bg-[#287BFF]/30 selection:text-white">
     <div id="root"></div>
     <script>
-      window.setTimeout(function () {
-        if (window.__SELLSMART_MOUNTED__) return;
-        var root = document.getElementById('root');
-        if (!root || root.childElementCount > 0) return;
-        document.body.style.backgroundColor = '#071426';
-        document.body.style.color = '#ffffff';
-        document.body.style.fontFamily = 'system-ui, -apple-system, sans-serif';
-        document.body.style.margin = '0';
-        root.innerHTML =
-          '<div style="min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;">' +
-          '<div style="max-width:520px;width:100%;background:#12243D;border:1px solid rgba(255,255,255,0.14);border-radius:20px;padding:28px;box-shadow:0 24px 64px rgba(2,8,20,0.55);">' +
-          '<div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;">' +
-          '<div style="width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg,#287BFF,#22D3EE);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:18px;">S</div>' +
-          '<div><h1 style="margin:0;font-size:18px;font-weight:700;">SellSmart AI</h1><p style="margin:2px 0 0;font-size:12px;color:#A7B4C7;">Build Required Before Static Preview</p></div>' +
-          '</div>' +
-          '<p style="margin:0 0 12px;font-size:13px;line-height:1.6;color:#CBD5E1;">This page was opened directly from raw source files before compiling the TypeScript application bundle.</p>' +
-          '<p style="margin:0;font-size:13px;line-height:1.6;color:#A7B4C7;">To view on GitHub Pages, set <strong style="color:#fff;">Settings &rarr; Pages &rarr; Source</strong> to <strong style="color:#22D3EE;">GitHub Actions</strong>, or run <code style="background:#071426;padding:2px 6px;border-radius:6px;color:#22D3EE;">npm install &amp;&amp; npm run build</code> and serve <code style="background:#071426;padding:2px 6px;border-radius:6px;color:#22D3EE;">dist/</code>.</p>' +
-          '</div></div>';
-      }, 3000);
+      (function () {
+        function showBootFallback(title, detail) {
+          if (window.__SELLSMART_MOUNTED__) return;
+          var root = document.getElementById('root');
+          if (!root || root.childElementCount > 0) return;
+          document.body.style.backgroundColor = '#071426';
+          document.body.style.color = '#ffffff';
+          document.body.style.fontFamily = 'system-ui, -apple-system, sans-serif';
+          document.body.style.margin = '0';
+          var safeDetail = String(detail || '')
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;');
+          root.innerHTML =
+            '<div style="min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;">' +
+            '<div style="max-width:540px;width:100%;background:#12243D;border:1px solid rgba(255,255,255,0.14);border-radius:20px;padding:28px;box-shadow:0 24px 64px rgba(2,8,20,0.55);">' +
+            '<div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;">' +
+            '<div style="width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg,#287BFF,#22D3EE);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:18px;">S</div>' +
+            '<div><h1 style="margin:0;font-size:18px;font-weight:700;">SellSmart AI</h1><p style="margin:2px 0 0;font-size:12px;color:#A7B4C7;">' + title + '</p></div>' +
+            '</div>' +
+            '<p style="margin:0 0 12px;font-size:13px;line-height:1.6;color:#CBD5E1;">' + safeDetail + '</p>' +
+            '<p style="margin:0;font-size:13px;line-height:1.6;color:#A7B4C7;">If hosting on GitHub Pages, set <strong style="color:#fff;">Settings &rarr; Pages &rarr; Source</strong> to <strong style="color:#22D3EE;">GitHub Actions</strong> so the built <code style="background:#071426;padding:2px 6px;border-radius:6px;color:#22D3EE;">dist/</code> bundle is served instead of raw source files.</p>' +
+            '</div></div>';
+        }
+
+        window.addEventListener('error', function (ev) {
+          if (window.__SELLSMART_MOUNTED__) return;
+          var msg = (ev && ev.message) || 'Failed to load application script.';
+          showBootFallback('Application Load Issue', msg);
+        });
+
+        window.addEventListener('unhandledrejection', function (ev) {
+          if (window.__SELLSMART_MOUNTED__) return;
+          var reason = ev && ev.reason && (ev.reason.message || String(ev.reason));
+          showBootFallback('Startup Error', reason || 'Unhandled startup promise rejection.');
+        });
+
+        window.setTimeout(function () {
+          showBootFallback(
+            'Build Required Before Static Preview',
+            'This page was opened from unbuilt source files or the JavaScript bundle could not load.'
+          );
+        }, 1800);
+      })();
     </script>
-    <script type="module" src="/src/main.tsx"></script>
+    <script type="module" src="./src/main.tsx"></script>
   </body>
 </html>

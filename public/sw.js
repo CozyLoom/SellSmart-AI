@@ -1,4 +1,4 @@
-const CACHE_NAME = 'sellsmart-ai-v2';
+const CACHE_NAME = 'sellsmart-ai-v3';
 const STATIC_ASSETS = ['./', './manifest.webmanifest', './icon.svg', './pwa-192x192.png'];
 
 self.addEventListener('install', (event) => {
