@@ -150,7 +150,7 @@ export const MarketingStudioPage: React.FC = () => {
       {/* Studio Editorial Hero Banner */}
       <div className="relative overflow-hidden rounded-2xl border border-slate-200/85 dark:border-white/[0.1] shadow-[0_18px_48px_-20px_rgba(7,20,38,0.55)]">
         <StudioImage
-          src="/src/assets/images/studio_marketing_desk_1795511632445.jpg"
+          src="./src/assets/images/studio_marketing_desk_1795511632445.jpg"
           alt="Editorial creative marketing studio flatlay"
           className="absolute inset-0 w-full h-full object-cover object-center"
           fallbackClassName="absolute inset-0 bg-[#0A172B]"

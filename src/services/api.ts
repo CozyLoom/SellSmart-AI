@@ -41,13 +41,20 @@ export async function apiRequest<T>(path: string, options: RequestInit = {}): Pr
     headers,
   });
 
+  const contentType = res.headers.get('content-type') || '';
   const text = await res.text();
   let json: Record<string, unknown> = {};
   if (text) {
     try {
       json = JSON.parse(text) as Record<string, unknown>;
     } catch {
-      json = { error: text };
+      const looksLikeHtml = contentType.includes('text/html') || text.trimStart().startsWith('<');
+      json = {
+        error: looksLikeHtml
+          ? 'Backend API server is not running on this static host. Run with Node.js (npm start) for live auth, SQLite storage, and Gemini AI.'
+          : text,
+        code: looksLikeHtml ? 'STATIC_HOST_NO_BACKEND' : undefined,
+      };
     }
   }
 

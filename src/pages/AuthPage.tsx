@@ -17,6 +17,7 @@ export const AuthPage: React.FC<{ onboardingOnly?: boolean }> = ({ onboardingOnl
   const [error, setError] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [googleConfigured, setGoogleConfigured] = useState(false);
+  const [staticHostNotice, setStaticHostNotice] = useState(false);
 
   // Auth form fields
   const [fullName, setFullName] = useState(user?.fullName || '');
@@ -38,9 +39,16 @@ export const AuthPage: React.FC<{ onboardingOnly?: boolean }> = ({ onboardingOnl
   const [loadDemo, setLoadDemo] = useState(false);
 
   useEffect(() => {
-    apiRequest<{ googleConfigured: boolean }>('/api/auth/providers')
-      .then((p) => setGoogleConfigured(p.googleConfigured))
-      .catch(() => undefined);
+    apiRequest<{ googleConfigured: boolean }>('./api/auth/providers')
+      .then((p) => {
+        setGoogleConfigured(p.googleConfigured);
+        setStaticHostNotice(false);
+      })
+      .catch((err) => {
+        if (err && typeof err === 'object' && 'code' in err && (err as { code?: string }).code === 'STATIC_HOST_NO_BACKEND') {
+          setStaticHostNotice(true);
+        }
+      });
   }, []);
 
   useEffect(() => {
@@ -153,7 +161,7 @@ export const AuthPage: React.FC<{ onboardingOnly?: boolean }> = ({ onboardingOnl
         <div className="w-full max-w-3xl surface-panel overflow-hidden">
           <div className="relative h-40 sm:h-48 w-full overflow-hidden border-b border-white/[0.1]">
             <img
-              src="/src/assets/images/studio_marketing_desk_1795511632445.jpg"
+              src="./src/assets/images/studio_marketing_desk_1795511632445.jpg"
               alt="SellSmart AI Executive Commerce Workspace"
               referrerPolicy="no-referrer"
               className="w-full h-full object-cover"
@@ -327,7 +335,7 @@ export const AuthPage: React.FC<{ onboardingOnly?: boolean }> = ({ onboardingOnl
       {/* Left Brand Showcase with 4K Architectural Photography */}
       <div className="relative lg:w-[50%] overflow-hidden p-8 lg:p-14 flex flex-col justify-between border-b lg:border-b-0 lg:border-r border-white/[0.1]">
         <img
-          src="/src/assets/images/hero_commerce_studio_1795511631472.jpg"
+          src="./src/assets/images/hero_commerce_studio_1795511631472.jpg"
           alt="SellSmart AI Flagship Retail Commerce Studio"
           referrerPolicy="no-referrer"
           className="absolute inset-0 w-full h-full object-cover"
@@ -375,7 +383,7 @@ export const AuthPage: React.FC<{ onboardingOnly?: boolean }> = ({ onboardingOnl
           <div className="grid grid-cols-3 gap-3">
             <div className="surface-frame aspect-[16/10]">
               <img
-                src="/src/assets/images/studio_marketing_desk_1795511632445.jpg"
+                src="./src/assets/images/studio_marketing_desk_1795511632445.jpg"
                 alt="AI Marketing Creative Studio"
                 referrerPolicy="no-referrer"
                 className="w-full h-full object-cover"
@@ -385,7 +393,7 @@ export const AuthPage: React.FC<{ onboardingOnly?: boolean }> = ({ onboardingOnl
             </div>
             <div className="surface-frame aspect-[16/10]">
               <img
-                src="/src/assets/images/studio_advisor_vault_1795511632573.jpg"
+                src="./src/assets/images/studio_advisor_vault_1795511632573.jpg"
                 alt="AI Financial Advisory Suite"
                 referrerPolicy="no-referrer"
                 className="w-full h-full object-cover"
@@ -395,7 +403,7 @@ export const AuthPage: React.FC<{ onboardingOnly?: boolean }> = ({ onboardingOnl
             </div>
             <div className="surface-frame aspect-[16/10]">
               <img
-                src="/src/assets/images/demo_luxury_watch_1795511633549.jpg"
+                src="./src/assets/images/demo_luxury_watch_1795511633549.jpg"
                 alt="High-Resolution Catalog Assets"
                 referrerPolicy="no-referrer"
                 className="w-full h-full object-cover"
@@ -459,6 +467,12 @@ export const AuthPage: React.FC<{ onboardingOnly?: boolean }> = ({ onboardingOnl
             {mode === 'forgot' && 'Enter your account email to receive a password reset code.'}
             {mode === 'reset' && 'Enter the 6-digit reset code and choose a new password.'}
           </p>
+
+          {staticHostNotice && (
+            <div className="mt-4 rounded-xl border border-amber-400/35 bg-amber-500/10 px-4 py-3 text-xs text-amber-200 leading-relaxed">
+              Static preview mode detected (GitHub Pages). Sign-in, SQLite workspace persistence, and Gemini AI require the Node.js server (<code className="font-mono text-white">npm start</code>).
+            </div>
+          )}
 
           {error && (
             <div className="mt-4 rounded-xl border border-rose-500/40 bg-rose-950/60 px-4 py-3 text-xs text-rose-200">

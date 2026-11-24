@@ -1,5 +1,5 @@
-const CACHE_NAME = 'sellsmart-ai-v1';
-const STATIC_ASSETS = ['/', '/manifest.webmanifest', '/icon.svg', '/pwa-192x192.png'];
+const CACHE_NAME = 'sellsmart-ai-v2';
+const STATIC_ASSETS = ['./', './manifest.webmanifest', './icon.svg', './pwa-192x192.png'];
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
@@ -20,7 +20,7 @@ self.addEventListener('activate', (event) => {
 self.addEventListener('fetch', (event) => {
   if (event.request.method !== 'GET') return;
   const url = new URL(event.request.url);
-  if (url.pathname.startsWith('/api/')) return;
+  if (url.origin !== self.location.origin || url.pathname.includes('/api/')) return;
 
   event.respondWith(
     fetch(event.request)
@@ -31,6 +31,6 @@ self.addEventListener('fetch', (event) => {
         }
         return response;
       })
-      .catch(() => caches.match(event.request).then((cached) => cached || caches.match('/')))
+      .catch(() => caches.match(event.request).then((cached) => cached || caches.match('./')))
   );
 });

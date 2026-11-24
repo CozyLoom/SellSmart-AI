@@ -57,7 +57,7 @@ export const AdvisorPage: React.FC = () => {
       <div className="lg:col-span-4 surface-panel overflow-hidden h-fit">
         <div className="relative h-36 w-full overflow-hidden border-b border-slate-200/80 dark:border-white/[0.08]">
           <StudioImage
-            src="/src/assets/images/studio_advisor_vault_1795511632573.jpg"
+            src="./src/assets/images/studio_advisor_vault_1795511632573.jpg"
             alt="Executive Financial Strategy Suite"
             className="w-full h-full object-cover object-center"
             fallbackClassName="w-full h-full bg-[#0A172B]"

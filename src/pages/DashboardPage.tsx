@@ -143,7 +143,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({ onNavigate }) => {
 
         <div className="lg:col-span-4 relative min-h-[168px] border-t lg:border-t-0 lg:border-l border-slate-200/85 dark:border-white/[0.08] overflow-hidden">
           <img
-            src="/src/assets/images/hero_commerce_studio_1795511631472.jpg"
+            src="./src/assets/images/hero_commerce_studio_1795511631472.jpg"
             alt="Flagship Commerce Operations"
             referrerPolicy="no-referrer"
             className="w-full h-full object-cover lg:absolute lg:inset-0"
@@ -418,7 +418,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({ onNavigate }) => {
           <div>
             <div className="relative h-24 w-full overflow-hidden border-b border-slate-200/80 dark:border-white/[0.08]">
               <img
-                src="/src/assets/images/studio_advisor_vault_1795511632573.jpg"
+                src="./src/assets/images/studio_advisor_vault_1795511632573.jpg"
                 alt="Executive Advisory Suite"
                 referrerPolicy="no-referrer"
                 className="w-full h-full object-cover"

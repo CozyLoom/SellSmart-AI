@@ -8,9 +8,9 @@ import { formatCurrency } from '../utils/format';
 import { StudioImage } from '../components/StudioImage';
 
 const STUDIO_SAMPLE_IMAGES = [
-  { label: 'Dark Basalt Plinth', url: '/src/assets/images/studio_poster_backdrop_1795511632445.jpg' },
-  { label: 'Titanium Watch', url: '/src/assets/images/demo_luxury_watch_1795511633549.jpg' },
-  { label: 'Cognac Leather Tote', url: '/src/assets/images/demo_leather_tote_1795504837446.jpg' },
+  { label: 'Dark Basalt Plinth', url: './src/assets/images/studio_poster_backdrop_1795511632445.jpg' },
+  { label: 'Titanium Watch', url: './src/assets/images/demo_luxury_watch_1795511633549.jpg' },
+  { label: 'Cognac Leather Tote', url: './src/assets/images/demo_leather_tote_1795504837446.jpg' },
 ];
 
 interface PosterFormat {

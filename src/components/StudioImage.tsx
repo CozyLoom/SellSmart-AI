@@ -23,12 +23,14 @@ export const StudioImage: React.FC<StudioImageProps> = ({
   const [failed, setFailed] = useState(false);
   const [loaded, setLoaded] = useState(false);
 
+  const resolvedSrc = src && src.startsWith('/src/assets/') ? `.${src}` : src;
+
   useEffect(() => {
     setFailed(false);
     setLoaded(false);
-  }, [src]);
+  }, [resolvedSrc]);
 
-  const showFallback = !src || failed;
+  const showFallback = !resolvedSrc || failed;
 
   return (
     <div
@@ -47,7 +49,7 @@ export const StudioImage: React.FC<StudioImageProps> = ({
         </div>
       ) : (
         <img
-          src={src}
+          src={resolvedSrc}
           alt={alt}
           referrerPolicy="no-referrer"
           loading="lazy"

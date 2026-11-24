@@ -63,12 +63,59 @@ const WorkspaceRouter: React.FC = () => {
   );
 };
 
+class AppErrorBoundary extends React.Component<
+  { children: React.ReactNode },
+  { hasError: boolean; message: string }
+> {
+  constructor(props: { children: React.ReactNode }) {
+    super(props);
+    this.state = { hasError: false, message: '' };
+  }
+
+  static getDerivedStateFromError(error: Error) {
+    return { hasError: true, message: error?.message || 'Unexpected rendering error.' };
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div className="min-h-screen bg-[#071426] text-white flex items-center justify-center p-6">
+          <div className="w-full max-w-md rounded-2xl border border-white/[0.12] bg-[#12243D] p-6 shadow-2xl">
+            <div className="flex items-center gap-3 mb-3">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#287BFF] to-[#22D3EE] flex items-center justify-center font-bold text-lg">
+                S
+              </div>
+              <div>
+                <h1 className="font-display font-bold text-lg">SellSmart AI</h1>
+                <p className="text-xs text-[#A7B4C7]">Workspace Recovery</p>
+              </div>
+            </div>
+            <p className="text-sm text-[#CBD5E1] leading-relaxed mb-4">
+              {this.state.message}
+            </p>
+            <button
+              type="button"
+              onClick={() => window.location.reload()}
+              className="w-full min-h-[42px] rounded-xl bg-[#287BFF] hover:brightness-110 text-sm font-semibold text-white transition-all"
+            >
+              Reload Workspace
+            </button>
+          </div>
+        </div>
+      );
+    }
+    return this.props.children;
+  }
+}
+
 export default function App() {
   return (
-    <ToastProvider>
-      <AuthProvider>
-        <WorkspaceRouter />
-      </AuthProvider>
-    </ToastProvider>
+    <AppErrorBoundary>
+      <ToastProvider>
+        <AuthProvider>
+          <WorkspaceRouter />
+        </AuthProvider>
+      </ToastProvider>
+    </AppErrorBoundary>
   );
 }
