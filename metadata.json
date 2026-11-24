@@ -1,0 +1,8 @@
+{
+  "name": "SellSmart AI",
+  "description": "Your Business. Smarter. Faster. Better. An international AI-powered business management platform for inventory, sales, orders, invoicing, marketing, and analytics.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
